@@ -1,4 +1,4 @@
-package com.aizistral.nochatreports.common.config;
+package com.aizistral.nochatreports.fabric.config;
 
 import java.util.Arrays;
 import java.util.List;
@@ -8,6 +8,8 @@ import com.aizistral.nochatreports.common.NCRCore;
 import com.aizistral.nochatreports.common.core.ServerSafetyState;
 import com.aizistral.nochatreports.common.core.SigningMode;
 import com.aizistral.nochatreports.common.gui.FontHelper;
+import com.aizistral.nochatreports.common.config.ClothConfigIntegration;
+
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
 
