@@ -1,14 +1,17 @@
 package com.aizistral.nochatreports.neoforge;
 
+import com.aizistral.nochatreports.common.NCRClient;
 import com.aizistral.nochatreports.common.NCRCore;
 import com.aizistral.nochatreports.common.platform.PlatformProvider;
 import com.aizistral.nochatreports.common.platform.events.ClientEvents;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.ClientPacketListener;
+
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
-import net.neoforged.neoforge.event.server.ServerStartedEvent;
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.EventBusSubscriber.Bus;
@@ -17,12 +20,20 @@ import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.fml.loading.FMLPaths;
 
 import java.nio.file.Path;
+import java.util.function.Function;
 
 @Mod("nochatreports")
 public class NoChatReports implements PlatformProvider {
 	
 	public NoChatReports() {
 		NCRCore.awaken(this);
+        Function<Screen, Screen> configScreenFactory = NCRClient.getConfigScreen();
+        if (isOnClient() && configScreenFactory != null) {
+            ModLoadingContext.get().registerExtensionPoint(
+                    IConfigScreenFactory.class,
+                    () -> (minecraft, parent) -> configScreenFactory.apply(parent)
+            );
+        }
 	}
 	
 	@Override
